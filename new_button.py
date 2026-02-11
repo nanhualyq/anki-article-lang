@@ -8,23 +8,29 @@ config = mw.addonManager.getConfig(__name__)
 def on_replace_and_return(editor: Editor):
     def got_selection(original_text: str):
         if not original_text:
-            tooltip("没有选中文本", period=1500)
+            tooltip("No text selected", period=1500)
             return
-
-        new_content = config['locale_placeholder']
 
         editor.web.eval(
             f"""
-            document.execCommand("insertText", false, {new_content!r});
+            document.execCommand("insertText", false, {config["locale_placeholder"]!r});
             """
         )
 
         def on_saved():
-            if "Locale" in editor.note:
-                editor.note["Locale"] = original_text
-                editor.loadNoteKeepingFocus()
+            field_locale = config["field_locale"]
+            locale_idx = editor.note.keys().index(field_locale)
+            if locale_idx == -1:
+                tooltip(f"Field {field_locale} not found in note", period=1500)
+                return
+            editor.note[field_locale] = original_text
+            editor.loadNote(focusTo=locale_idx)
 
         editor.call_after_note_saved(on_saved, keepFocus=True)
+
+    if editor.note.note_type()["name"] != config["notetype_name"]:
+        tooltip(f"Not a {config['notetype_name']} note", period=1500)
+        return
 
     # 先异步获取选中文本（最准的方式）
     js_get_sel = """
@@ -46,7 +52,7 @@ def add_my_replace_button(buttons, editor):
         func=on_replace_and_return,
         tip=f"Extract Locale ({config['extract_shortcut']})",
         label="✂️",
-        keys=config['extract_shortcut'],
+        keys=config["extract_shortcut"],
     )
     buttons.append(btn)
     return buttons
