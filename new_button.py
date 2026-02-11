@@ -42,11 +42,11 @@ def on_replace_and_return(editor: Editor):
 def add_my_replace_button(buttons, editor):
     btn = editor.addButton(
         icon=None,
-        cmd="extract_en_text_to_cn",
+        cmd="extract_locale_text",
         func=on_replace_and_return,
-        tip="Extract En Text",
-        label="En",
-        keys="Ctrl+Alt+E",
+        tip=f"Extract Locale ({config['extract_shortcut']})",
+        label="✂️",
+        keys=config['extract_shortcut'],
     )
     buttons.append(btn)
     return buttons
