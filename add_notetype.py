@@ -2,7 +2,7 @@ from aqt import mw
 from anki.models import ModelManager
 
 MODEL_NAME = "@ArticleLang"
-
+config = mw.addonManager.getConfig(__name__)
 
 def get_style():
     return """
@@ -44,7 +44,7 @@ def get_read_tmpl(mm: ModelManager):
     location.hash = '#mark-box'
   }, 0);
 </script>
-    '''
+    '''.replace('!???!', config['locale_placeholder'])
     tmpl["afmt"] = '''
 {{FrontSide}}
 <button id="popover-button" popovertarget="my-popover">Toggle Popover</button>
@@ -87,7 +87,7 @@ def get_speak_tmpl(mm: ModelManager):
     location.hash = '#mark-box'
   }, 0);
 </script>
-    '''
+    '''.replace('!???!', config['locale_placeholder'])
     tmpl["afmt"] = '''
 {{FrontSide}}
 <button id="popover-button" popovertarget="my-popover">Toggle Popover</button>
@@ -127,7 +127,7 @@ def get_write_tmpl(mm: ModelManager):
     location.hash = '#mark-box'
   }, 0);
 </script>
-    '''
+    '''.replace('!???!', config['locale_placeholder'])
     tmpl["afmt"] = '''
 {{FrontSide}}
 <button id="popover-button" popovertarget="my-popover">Toggle Popover</button>
@@ -169,7 +169,7 @@ def get_listen_tmpl(mm: ModelManager):
     location.hash = '#mark-box'
   }, 0);
 </script>
-    '''
+    '''.replace('!???!', config['locale_placeholder'])
     tmpl["afmt"] = '''
 {{FrontSide}}
 <button id="popover-button" popovertarget="my-popover">Toggle Popover</button>

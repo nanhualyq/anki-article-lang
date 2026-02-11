@@ -1,6 +1,8 @@
-import json
-from aqt.editor import Editor, EditorMode
-from aqt.utils import tooltip, showInfo
+from aqt import mw
+from aqt.editor import Editor
+from aqt.utils import tooltip
+
+config = mw.addonManager.getConfig(__name__)
 
 
 def on_replace_and_return(editor: Editor):
@@ -9,7 +11,7 @@ def on_replace_and_return(editor: Editor):
             tooltip("没有选中文本", period=1500)
             return
 
-        new_content = "!???!"
+        new_content = config['locale_placeholder']
 
         editor.web.eval(
             f"""

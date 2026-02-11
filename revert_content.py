@@ -1,4 +1,7 @@
+from aqt import mw
 from aqt.editor import Editor, EditorMode
+
+config = mw.addonManager.getConfig(__name__)
 
 def revert_content(editor: Editor):
     print(editor.note)
@@ -15,7 +18,7 @@ def revert_content(editor: Editor):
     if not editor.note["Locale"]:
         return
     editor.note["Content"] = editor.note["Content"].replace(
-        "!???!", editor.note["Locale"]
+        config['locale_placeholder'], editor.note["Locale"]
     )
     editor.note['LocaleAlt'] = ''
     editor.note['LocaleTips'] = ''
