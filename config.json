@@ -1,6 +1,6 @@
 {
     "locale_placeholder": "!???!",
-    "extract_shortcut": "Ctrl+Alt+E",
+    "extract_shortcut": "Ctrl+E",
     "notetype_name": "@ArticleLang",
     "field_content": "Content",
     "field_locale": "Locale",
